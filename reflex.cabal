@@ -23,11 +23,6 @@ flag use-reflex-optimizer
   default: False
   manual: True
 
-flag use-template-haskell
-  description: Use template haskell to generate lenses
-  default: True
-  manual: True
-
 flag expose-all-unfoldings
   description: Build the library with -fexpose-all-unfoldings which can help client code specialize better
   default: False
@@ -117,19 +112,8 @@ library
     build-depends: ghc
     exposed-modules: Reflex.Optimizer
 
-  if flag(use-template-haskell)
-    cpp-options: -DUSE_TEMPLATE_HASKELL
-    build-depends:
-      dependent-sum >= 0.3 && < 0.5,
-      haskell-src-exts >= 1.16 && < 1.19,
-      haskell-src-meta >= 0.6 && < 0.9,
-      template-haskell >= 2.9 && < 2.13
-    exposed-modules:
-      Reflex.Dynamic.TH
-    other-extensions: TemplateHaskell
-  else
-    build-depends:
-      dependent-sum == 0.4.*
+  build-depends:
+    dependent-sum == 0.4.*
 
   if flag(expose-all-unfoldings)
     ghc-options: -fexpose-all-unfoldings

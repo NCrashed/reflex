@@ -1290,7 +1290,7 @@ traceMWhen _ b getMessage = when b $ do
   liftIO $ putStrLn $ replicate d ' ' <> message
 
 whoCreatedIORef :: IORef a -> IO [String]
-whoCreatedIORef (IORef a) = whoCreated $! a
+whoCreatedIORef (IORef a) = pure [] -- whoCreated $! a -- eta doesn't have callstack support yet
 
 #ifdef DEBUG_CYCLES
 groupByHead :: Eq a => [NonEmpty a] -> [(a, NonEmpty [a])]
